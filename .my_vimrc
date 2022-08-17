@@ -1,0 +1,76 @@
+" -----------Variables-----------------------------------------------------------
+let g:is_windows = &term == "win32" || "pcterm" || has("gui_win32")
+let g:is_linux = g:is_windows == 0
+" ************ Define as seguintes variables (default para Linux) **********
+" 'home directory' do user
+let s:home = '/home/dleandro'
+" 'vi folder' do user
+let g:vi_dir = s:home . '/.vim'
+if g:is_windows
+    let s:home = '%USERPROFILE%'
+    let g:vi_dir = s:home . '/_vim'
+endif
+
+" ---------- Default Settings ---------------------------------------------------
+execute 'source ' . g:vi_dir . '/sources/run-settings-default.vim'
+
+" ---------- Plugins ------------------------------------------------------------
+
+" ******** Vim-Plug settings *****************************************
+execute 'source ' . g:vi_dir . '/sources/ini-vim-plug.vim'
+
+" ******** Vim-Plug's plugins settings *******************************
+execute 'source ' . g:vi_dir . '/sources/run-load-plugins.vim'
+
+" ******** NERDTree settings *****************************************
+execute 'source ' . g:vi_dir . '/sources/ini-NERDTree.vim'
+
+" ******** Vim-Emmet settings ****************************************
+execute 'source ' . g:vi_dir . '/sources/ini-emmet.vim'
+
+" ******** TagBarToogle settings *************************************
+execute 'source ' . g:vi_dir . '/sources/ini-tag-bar-toogle.vim'
+
+" ******** Vim-air-line settings *************************************
+execute 'source ' . g:vi_dir . '/sources/ini-vim-airline.vim'
+
+" ******** Vim-air-line-theme settings *************************************
+execute 'source ' . g:vi_dir . '/sources/ini-vim-airline-themes.vim'
+
+" ******** nerd-fonts settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-nerd-fonts.vim'
+
+" ******** coc.nvim settings *****************************************
+execute 'source ' . g:vi_dir . '/sources/ini-coc-nvim.vim'
+
+" ******** ctrlP settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-ctrlp.vim'
+
+" ******** ale settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-ale.vim'
+
+" ******** dev-icons settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-devicons.vim'
+
+" ******** nerdtree-git-plugin settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-nerdtree-git-plugin.vim'
+
+" ******** nerdtree-syntax-highlight settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-vim-nerdtree-syntax-highlight.vim'
+
+" ******** php-getter-setter settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-php-getter-setter.vim'
+
+" ---------- Configurações customizadas do vi (built-in) -------------------------
+
+execute 'source ' . g:vi_dir . '/sources/run-my-remaps.vim'
+
+" ****** Skeleton loads ******
+execute 'source ' . g:vi_dir . '/sources/run-skeletons.vim'
+
+" -------------------------------------------------------------------------------
+
+
+
+
+
