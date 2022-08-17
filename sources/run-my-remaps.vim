@@ -6,7 +6,7 @@
 
 " Keyboard shortcut para os commands de troca de aba do NERDTree
 " Usa somente o sentido right-to-left
-nmap <silent> <c-o> :bnext<CR>
+nnoremap <silent>  :bnext<CR>
 
 " Fecha o buffer onde o cursor esteja ativo
 nnoremap .. :bd<CR>
@@ -48,7 +48,6 @@ imap [ []<left>
 
 " Keyboard-shortcut para a auto-load do .vimrc e do NERDTree
 nnoremap <C-s> :source ~/.vimrc<cr>
-
 
 
 

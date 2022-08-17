@@ -5,6 +5,7 @@
 /autoload
 /plugged
 /scripts
+*.swp
 
 # -------------------------------------------------------------------------
 # These are some examples of commonly ignored file patterns.
