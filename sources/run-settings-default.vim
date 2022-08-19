@@ -48,4 +48,6 @@ set clipboard=unnamedplus
 " eol:$
 set listchars=trail:.,eol:$
 
+" Serve para que o built-in terminal do vim abra no 'bottom'
+set splitbelow
 

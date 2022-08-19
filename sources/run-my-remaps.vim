@@ -8,8 +8,6 @@
 " Usa somente o sentido right-to-left
 nnoremap <silent>  :bnext<CR>
 
-" Fecha o buffer onde o cursor esteja ativo
-nnoremap .. :bd<CR>
 " Abre/Fecha o NERDTree no directory atual
 nnoremap ;;; :NERDTreeToggle<CR>
 
@@ -49,11 +47,19 @@ imap [ []<left>
 " Keyboard-shortcut para a auto-load do .vimrc e do NERDTree
 nnoremap <C-s> :source ~/.vimrc<cr>
 
+" Keyboard-shortcut para copiar, para o clipboar, o filepath do arquivo onde o cursor está ativo
+nnoremap fp :let @+=@%<cr>
 
+" --------------------------------------------------------------------------------
+"
+" O 'c+d' keyboard-shortcut faz com que ocorra um command 'cd selected-directory-path'
+" antecipado utilizando o pathname do folder da linha selecionada no NERDTree.
+"
+" O Keyboard-shortcut abaixo abre o terminal interno do vim
+"
+" --------------------------------------------------------------------------------
+nnoremap t :term<cr>
 
-
-
-
-
-
-
+" Insere o carregamento de um arquivo de configuração de um plugin no '.vimrc'
+" Mais informações no doc da function que é chamada
+nnoremap <silent> rf :call :InsertRefSourceLine()<cr>

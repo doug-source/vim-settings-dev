@@ -58,8 +58,14 @@ execute 'source ' . g:vi_dir . '/sources/ini-nerdtree-git-plugin.vim'
 " ******** nerdtree-syntax-highlight settings ************************************
 execute 'source ' . g:vi_dir . '/sources/ini-vim-nerdtree-syntax-highlight.vim'
 
-" ******** php-getter-setter settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-php-getter-setter.vim'
+" ******** bbye settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-bbye.vim'
+
+" ******** vim-markdown settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-vim-markdown.vim'
+
+" ******** coc-intelephense settings ************************************
+execute 'source ' . g:vi_dir . '/sources/ini-coc-intelephense.vim'
 
 " ---------- Configurações customizadas do vi (built-in) -------------------------
 

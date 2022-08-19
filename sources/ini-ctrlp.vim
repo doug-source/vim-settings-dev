@@ -10,3 +10,6 @@ nnoremap b :call ExecCommand('CtrlPBuffer')<cr>
 
 " Não limpa o cache quando realiza exit do vim
 let g:ctrlp_clear_cache_on_exit = 0
+
+" Utiliza o diretório do arquivo atual como pesquisa
+let g:ctrlp_working_path_mode = 'c'
