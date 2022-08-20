@@ -40,7 +40,6 @@ nnoremap <S-t> :Tex ~<cr>
 
 " Fecha automaticamente braches, parentheses e bracket (square)
 " no insert mode
-imap { {}<left>
 imap ( ()<left>
 imap [ []<left>
 
@@ -62,4 +61,4 @@ nnoremap t :term<cr>
 
 " Insere o carregamento de um arquivo de configuração de um plugin no '.vimrc'
 " Mais informações no doc da function que é chamada
-nnoremap <silent> rf :call :InsertRefSourceLine()<cr>
+nnoremap <silent> rf :call InsertRefSourceLine()<cr>

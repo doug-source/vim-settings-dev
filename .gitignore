@@ -6,6 +6,8 @@
 /plugged
 /scripts
 *.swp
+/.session.vim
+/markers/.vimRunning
 
 # -------------------------------------------------------------------------
 # These are some examples of commonly ignored file patterns.

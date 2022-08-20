@@ -1,3 +1,6 @@
+" ******** Loading das custom functions ************************************
+execute 'source ' . g:vi_dir . '/sources/run-functions.vim'
+
 " ---------------------------------------------------------------------------
 " 
 " Define as 'coc extensions' instaladas (automaticamente no startup do vim)
@@ -6,7 +9,6 @@
 let g:coc_global_extensions =<< trim EXT
     coc-html
     coc-sh
-    coc-phpls
     coc-json
     coc-css
     coc-pyright
@@ -16,11 +18,21 @@ let g:coc_global_extensions =<< trim EXT
     @yaegassy/coc-intelephense
 EXT
 
-" Keyboard shortcut para utilização da 'TAB key' para seleção de autocomplete
-inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<TAB>"
+let g:coc_start_at_startup = 1
 
-" Keyboard shortcut para utilização da 'Ctrl+space' para seleção de autocomplete
-inoremap <silent><expr> <C-@> coc#pum#visible() ? coc#pum#confirm() : "\<TAB>"
+" Keyboard shortcut para utilização de 'TAB key' para seleção de autocomplete
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() :
+    \ coc#pum#visible() ? coc#_select_confirm() :
+    \ coc#expandableOrJumpable() ?
+    \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+    \ CheckBackSpace() ? "\<TAB>" :
+    \ coc#refresh()
+
+" Keyboard shortcut para utilização de 'Ctrl+space' para seleção de autocomplete
+inoremap <silent><expr> <C-@> coc#pum#visible() ? coc#pum#confirm() : "\<C-@>"
+
+" Keyboard shortcut para utilização de 'Enter' para seleção de autocomplete
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 " ===================================================================================
 
@@ -115,18 +127,25 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+
 " Manage extensions.
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+
 " Search workspace symbols.
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+
 " Do default action for previous item.
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 

@@ -27,3 +27,45 @@ function! InsertRefSourceLine()
     . put= 'execute ''source '' . g:vi_dir . ''/' . l:file_path . ''''
 endfunction
 
+"
+" Definição de function solicitada pela documentação do plugin coc.nvim
+"
+function! CheckBackSpace() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"
+" Realiza o 'save session' no fechamento do Vim
+"
+function! PersistSession()
+    if empty(glob(g:vi_dir . '/markers/.devRunning'))
+        return
+    endif
+    autocmd VimLeave * NERDTreeTabsClose
+    execute 'autocmd VimLeave * mksession! ' . g:vi_dir . '/.session.vim'
+    " Remove o arquivo que sinaliza que o vim abriu em 'development cycle'
+    if g:is_linux
+        autocmd VimLeave * silent execute '!rm -f ' . g:vi_dir . '/markers/.devRunning'
+    endif
+endfunction
+
+"
+" Realiza o 'load session' na abertura do Vim
+"
+function! LoadSession()
+    if empty(glob(g:vi_dir . '/markers/.devRunning'))
+        return
+    endif
+    silent execute 'source ' . g:vi_dir . '/.session.vim'
+    autocmd VimEnter * call NERDTreeCustomOpening()
+endfunction
+
+"
+" Abre a NERDTree de uma forma customizada
+"
+function! NERDTreeCustomOpening()
+    NERDTree | OpenBookmark editor
+    wincmd p
+endfunction
+

@@ -1,4 +1,7 @@
 "
+" ******** Loading das custom functions ************************************
+execute 'source ' . g:vi_dir . '/sources/run-functions.vim'
+
 " Define o encoding em UTF-8
 set encoding=utf8
 
@@ -50,4 +53,20 @@ set listchars=trail:.,eol:$
 
 " Serve para que o built-in terminal do vim abra no 'bottom'
 set splitbelow
+
+"
+" Rotina de salvamento de session do vim
+"
+call PersistSession()
+
+"
+" Rotina de carregamento de session do vim
+"
+call LoadSession()
+
+
+
+
+
+
 
