@@ -33,7 +33,7 @@ vnoremap <C-Up> :m '<-2<CR>gv=gv
 " removendo a word e ficando no aguardo da edição.
 " Próximos passos: Aperte Esc e aperte n para ir até a próxima
 " 'matched word' e (opcional) aperte . para aplicar a edição
-nnoremap <C-d> /<C-r><C-w><cr><S-n>cgn
+nnoremap <silent> <C-d> /<C-r><C-w><cr><S-n>cgn
 
 " Abre uma aba nova visualizando o 'file explorer' no 'home directory' do user
 nnoremap <S-t> :Tex ~<cr>
@@ -57,7 +57,7 @@ nnoremap fp :let @+=@%<cr>
 " O Keyboard-shortcut abaixo abre o terminal interno do vim
 "
 " --------------------------------------------------------------------------------
-nnoremap t :term<cr>
+nnoremap <silent> t :term<cr>
 
 " Insere o carregamento de um arquivo de configuração de um plugin no '.vimrc'
 " Mais informações no doc da function que é chamada

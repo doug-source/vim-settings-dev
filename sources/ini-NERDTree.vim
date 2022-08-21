@@ -13,5 +13,5 @@ let g:NERDTreeDirArrowCollapsible="-"
 nnoremap çç :call ExecCommand('NERDTreeRefreshRoot')<CR>
 
 " Keyboard-shortcut para a expand NERDTree no arquivo que está ativo
-nnoremap ,t :call ExecCommand('NERDTreeFind')<CR>
+nnoremap <silent> ,t :call ExecCommand('NERDTreeFind')<CR>
 

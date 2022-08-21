@@ -61,11 +61,20 @@ function! LoadSession()
     autocmd VimEnter * call NERDTreeCustomOpening()
 endfunction
 
+function! PickBookmark()
+    let l:bookmarkFilepath = g:vi_dir . '/markers/bookmarkActive'
+    if empty(glob(l:bookmarkFilepath))
+        return 'editor'
+    endif
+    return trim(join(readfile(l:bookmarkFilepath), ''))
+endfunction
+
 "
 " Abre a NERDTree de uma forma customizada
 "
 function! NERDTreeCustomOpening()
-    NERDTree | OpenBookmark editor
+    let l:bookmark = PickBookmark()
+    execute 'NERDTree | OpenBookmark ' . l:bookmark 
     wincmd p
 endfunction
 
