@@ -103,3 +103,24 @@ function! NERDTreeCustomOpening()
     wincmd p
 endfunction
 
+"
+" Register the keymap to trigger the DeleteBuffer function
+"
+" Used by:
+"   - sources/ini-ctrlp.vim
+"
+function! CtrlPMappings()
+    nnoremap <buffer> <silent> <C-@> :call DeleteBuffer()<cr>
+endfunction
+
+"
+" Function with a Buffer line deletion logic used by CtrlP plugin
+"
+" @link https://gist.github.com/rainerborene/8074898
+"
+function! DeleteBuffer()
+  let path = fnamemodify(getline('.')[2:], ':p')
+  let bufn = matchstr(path, '\v\d+\ze\*No Name')
+  exec "bd" bufn ==# "" ? path : bufn
+  exec "norm \<F5>"
+endfunction

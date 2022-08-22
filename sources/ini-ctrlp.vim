@@ -15,3 +15,6 @@ let g:ctrlp_clear_cache_on_exit = 0
 
 " Use the file directory from current file during search
 let g:ctrlp_working_path_mode = 'c'
+
+" Register the CtrlPMappings function to be used while the buffer window is open
+let g:ctrlp_buffer_func = { 'enter': 'CtrlPMappings' }
