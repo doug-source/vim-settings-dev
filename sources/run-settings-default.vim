@@ -1,72 +1,65 @@
 "
-" ******** Loading das custom functions ************************************
+" ******** Custom functions loading ************************************
 execute 'source ' . g:vi_dir . '/sources/run-functions.vim'
 
-" Define o encoding em UTF-8
+" Define the UTF-8 encoding
 set encoding=utf8
 
-" O arquivo predawn.vim deve estar dentro da pasta '~/.vim/colors/' para o vim
-" detectar esse theme
+" The predawn.vim file must be inside 'colors/' directory to vim
+" detect this theme
 colorscheme predawn
 
-" Torna itálico todos os comentários
+" Turn italic every comment
 highlight Comment cterm=italic
 
 set nocp
 
-" Exibe autocomplete, em horizontal-view, no command-mode
+" Display autocomplete, in the horizontal-view way, in command-mode
 set wildmenu
 
-" Se houver alterações no arquivo, pergunta se quer salvar antes de fechar arquivo
+" If there are file modifications, ask if must save before close the file
 set confirm
 
-" Realiza o foco no local onde houve o click do mouse/touchpad
+" Execute focus where the mouse click
 set mouse=a
 
-" Adiciona o filename, que está sendo editado, no título do terminal
+" Add the filename it's been edited, in terminal title
 set title
 
-" Mostra os 'line numbers'
+" Display the 'line numbers'
 set number
 
-" Insere automaticamente a identação da linha anterior durante 'newlines'
+" Insert automatically the identation from upper line during 'newlines'
 set autoindent
 
-" Mostra as teclas utilizadas nos commands, durante o 'normal mode'
+" Display used keys during the commands, on 'normal mode'
 set showcmd
 
-" Usa '4 spaces' como tabulação, como default
+" Use '4 spaces' as tabulation como tab, as default
 set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" Redireciona o copiar do vim para o clipboard e vice-versa
+" Redirect the vim copy to clipboard e vice-versa
 set clipboard=unnamedplus
 
-" Define a visualização de no-printable characters
-" Semelhante ao 'cat -A' shell command
+" Define the view of no-printable characters
+" Similar to 'cat -A' shell command
 " tab:^I
 " space:.
 " eol:$
 set listchars=trail:.,eol:$
 
-" Serve para que o built-in terminal do vim abra no 'bottom'
+" It serves for vim's built-in terminal open on the 'bottom' side
 set splitbelow
 
 "
-" Rotina de salvamento de session do vim
+" Session saving routine from vim
 "
 call PersistSession()
 
 "
-" Rotina de carregamento de session do vim
+" Session loading routine from vim
 "
 call LoadSession()
-
-
-
-
-
-
-

@@ -1,25 +1,25 @@
 " Nota:
-" Para verificar quais atalhos já foram mapeados, utilize o seguinte comando:
+" To verify which shortcuts already were mapped, use the following command:
 " :verbose map shortcut
 " :verbose imap shortcut
 " :verbose vmap shortcut
 
-" Keyboard shortcut para os commands de troca de aba do NERDTree
-" Usa somente o sentido right-to-left
+" Keyboard shortcut to tab switch from NERDTree
+" This uses only right-to-left sense
 nnoremap <silent>  :bnext<CR>
 
-" Abre/Fecha o NERDTree no directory atual
+" Open/Close the current NERDTree's directory tree
 nnoremap ;;; :NERDTreeToggle<CR>
 
-" Shortcut para trocar right-to-left em split-windows
-" Ctrl-w-w faz isso no sentido contrário
+" Keyboard shortcut to tab switch in right-to-left sense (split-windows)
+" Ctrl-w-w does it on opposite way
 nnoremap <silent> <C-q> <c-w>h
 
-" Remove o text highlight do editor após o search
-" A tecla 'space' faz isso
+" Remove the editor's text highlight after the search
+" The space key does it
 :nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 
-" Movimento de linhas inteiras para cima ou para baixo
+" Moviment of entire lines to up or to down
 " mode: normal, insert, visual
 " source: Sublime-text
 nnoremap <C-Down> :m .+1<CR>==
@@ -29,36 +29,36 @@ inoremap <C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 vnoremap <C-Up> :m '<-2<CR>gv=gv
 
-" Inicia uma 'multiple-edition' usando um search na word sob o cursor,
-" removendo a word e ficando no aguardo da edição.
-" Próximos passos: Aperte Esc e aperte n para ir até a próxima
-" 'matched word' e (opcional) aperte . para aplicar a edição
+" Start a 'multiple-edition' using a search on the word from cursor,
+" removing the word e staying waiting the edition.
+" Next steps: Press Esc key and press n to go until next
+" 'matched word' and (optional) press . to apply the edition
 nnoremap <silent> <C-d> /<C-r><C-w><cr><S-n>cgn
 
-" Abre uma aba nova visualizando o 'file explorer' no 'home directory' do user
+" Open a new tab visualizing the 'file explorer' in user's home directory
 nnoremap <S-t> :Tex ~<cr>
 
-" Fecha automaticamente braches, parentheses e bracket (square)
-" no insert mode
+" Automatically close the parentheses and bracket (square)
+" in insert mode
 imap ( ()<left>
 imap [ []<left>
 
-" Keyboard-shortcut para a auto-load do .vimrc e do NERDTree
+" Keyboard-shortcut to auto-load operation from .vimrc and from NERDTree
 nnoremap <C-s> :source ~/.vimrc<cr>
 
-" Keyboard-shortcut para copiar, para o clipboar, o filepath do arquivo onde o cursor está ativo
-nnoremap fp :let @+=@%<cr>
+" Keyboard-shortcut to copy to clipboard the full pathname from active file
+nnoremap <silent> fp :let @+=@%<cr>
 
-" --------------------------------------------------------------------------------
+" -------------------------------------------------------------------------------------------------------
 "
-" O 'c+d' keyboard-shortcut faz com que ocorra um command 'cd selected-directory-path'
-" antecipado utilizando o pathname do folder da linha selecionada no NERDTree.
+" The 'c+d' keyboard-shortcut cause the passing of NERDTree directory tree's node's basename with focus
+" to NERDTree's CWD variable
 "
-" O Keyboard-shortcut abaixo abre o terminal interno do vim
+" The Keyboard-shortcut below opens the vim's buit-in terminal
 "
-" --------------------------------------------------------------------------------
+" -------------------------------------------------------------------------------------------------------
 nnoremap <silent> t :term<cr>
 
-" Insere o carregamento de um arquivo de configuração de um plugin no '.vimrc'
-" Mais informações no doc da function que é chamada
+" Insert the setting file's loading from some plugin pre-copied on the clipboard into '.vimrc'
+" More information: sources/run-functions.vim
 nnoremap <silent> rf :call InsertRefSourceLine()<cr>

@@ -1,5 +1,5 @@
 "
-" Executa o command se ele existir
+" Execute the command if it exists 
 "
 function! ExecCommand(comm_name, ...)
     let l:command = ':' . a:comm_name
@@ -15,8 +15,8 @@ function! ExecCommand(comm_name, ...)
 endfunction
 
 "
-" Function utilitária para inserir o carregamento do pathname, do arquivo de configuração de dentro
-" da pasta '/sources', presente no clipboard, no arquivo '.vimrc'
+" Utility method to insert the pathname loading text of settings file existing inside
+" '/sources' directory, from clipboard, into '.vimrc' file
 "
 function! InsertRefSourceLine()
     let l:pl_name = substitute(@+, '^\v[^/]+/[^/]+/(.+)\.vim', '\1', '')
@@ -28,7 +28,7 @@ function! InsertRefSourceLine()
 endfunction
 
 "
-" Definição de function solicitada pela documentação do plugin coc.nvim
+" Function definition requested for coc.nvim plugin documentation
 "
 function! CheckBackSpace() abort
     let col = col('.') - 1
@@ -36,13 +36,13 @@ function! CheckBackSpace() abort
 endfunction
 
 "
-" Realiza o 'save session' no fechamento do Vim
+" Execute the 'save session' in Vim closing
 "
 function! PersistSession()
     if empty(glob(g:vi_dir . '/markers/.devRunning'))
         return
     endif
-    autocmd VimLeave * NERDTreeTabsClose
+    autocmd VimLeave * call ExecCommand('NERDTreeTabsClose')
     execute 'autocmd VimLeave * mksession! ' . g:vi_dir . '/.session.vim'
     " Remove o arquivo que sinaliza que o vim abriu em 'development cycle'
     if g:is_linux
@@ -51,30 +51,55 @@ function! PersistSession()
 endfunction
 
 "
-" Realiza o 'load session' na abertura do Vim
+" Execute the 'load session' in Vim opening
 "
 function! LoadSession()
     if empty(glob(g:vi_dir . '/markers/.devRunning'))
         return
     endif
-    silent execute 'source ' . g:vi_dir . '/.session.vim'
+    let l:session_filepath = g:vi_dir . '/.session.vim'
+    if empty(glob(l:session_filepath))
+        autocmd VimEnter * call NERDTreeCustomOpening()
+        return
+    endif
+    " ----------------------------------------------
+    " To cases that vim persist its session file
+    " in the wrong way causing loading errors
+    " ----------------------------------------------
+    try
+        silent execute 'source ' . l:session_filepath
+    catch /.*/
+        let l:cmd = g:is_windows ? 'del' : 'rm'
+        silent execute '!' . l:cmd . ' ' . l:session_filepath
+        echo 'Error during the loading of vim''s session file!'
+    endtry
     autocmd VimEnter * call NERDTreeCustomOpening()
 endfunction
 
+"
+" Returns the 'NERDTree bookmark name' defined into bookmarkActive file, or a 'v:null' value
+"
 function! PickBookmark()
     let l:bookmarkFilepath = g:vi_dir . '/markers/bookmarkActive'
     if empty(glob(l:bookmarkFilepath))
-        return 'editor'
+        return v:null
     endif
     return trim(join(readfile(l:bookmarkFilepath), ''))
 endfunction
 
 "
-" Abre a NERDTree de uma forma customizada
+" Open NERDTree in a custom way
 "
 function! NERDTreeCustomOpening()
+    if !exists(':NERDTree')
+        return
+    endif
     let l:bookmark = PickBookmark()
-    execute 'NERDTree | OpenBookmark ' . l:bookmark 
+    if l:bookmark is v:null || !g:NERDTreeBookmark.BookmarkExistsFor(l:bookmark)
+        NERDTree
+    else
+        execute 'NERDTree | OpenBookmark ' . l:bookmark 
+    endif
     wincmd p
 endfunction
 

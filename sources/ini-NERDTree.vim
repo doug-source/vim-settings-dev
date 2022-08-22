@@ -1,17 +1,16 @@
-" ******** Loading das custom functions ************************************
+" ******** Custom functions loading ************************************
 execute 'source ' . g:vi_dir . '/sources/run-functions.vim'
 
-" Preserva a 'Natural sort' na ordenação dos arquivos e folders
+" Preserve the 'Natural sort' of directory and files
 let NERDTreeNaturalSort=1
-" Mostra 'hidden files'
+" Show 'hidden files'
 let NERDTreeShowHidden=1
 
 let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="-"
 
-" Keyboard-shortcut para a reload do NERDTree
+" Keyboard-shortcut to NERDTree reload
 nnoremap çç :call ExecCommand('NERDTreeRefreshRoot')<CR>
 
-" Keyboard-shortcut para a expand NERDTree no arquivo que está ativo
+" Keyboard-shortcut to expand NERDTree's directory tree of file focused
 nnoremap <silent> ,t :call ExecCommand('NERDTreeFind')<CR>
-

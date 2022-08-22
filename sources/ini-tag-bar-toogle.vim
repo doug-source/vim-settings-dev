@@ -1,4 +1,4 @@
 
-" Abre a janela do TagbarToogle
+" Open TagbarToogle window
 nnoremap <F8> :TagbarToggle<CR>
 

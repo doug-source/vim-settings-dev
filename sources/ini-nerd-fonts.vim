@@ -1,7 +1,7 @@
 " ----------------------------------------------------------------
 "
-"  Realiza a instalação das 'NERD fonts' (uma única vez)
-"  
+"  Execute the 'NERD fonts' installation (once time)
+"
 "  URL: https://github.com/ryanoasis/nerd-fonts
 "  URL: https://docs.fedoraproject.org/en-US/quick-docs/fonts/
 "

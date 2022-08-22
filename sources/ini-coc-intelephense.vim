@@ -1,4 +1,6 @@
-
+" 
+" The custom keymap from default Coc commands
+"
 nnoremap <silent> <leader>iw :CocCommand intelephense.index.workspace<cr> 
 nnoremap <silent> <leader>ci :CocCommand intelephense.cancel.indexing<cr>
 nnoremap <silent> <leader>cr :CocCommand intelephense.composer.runCommand<cr>

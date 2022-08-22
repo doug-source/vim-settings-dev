@@ -1,18 +1,16 @@
 " -----------Variables-----------------------------------------------------------
-let g:is_windows = &term == "win32" || "pcterm" || has("gui_win32")
-let g:is_linux = g:is_windows == 0
-" ************ Define as seguintes variables (default para Linux) **********
-" 'home directory' do user
-let s:home = '/home/dleandro'
-" 'vi folder' do user
-let g:vi_dir = s:home . '/.vim'
-if g:is_windows
-    let s:home = '%USERPROFILE%'
-    let g:vi_dir = s:home . '/_vim'
-endif
+let g:is_windows = &term == "win32" || "pcterm" || has("gui_win32") || has('win32')
+let g:is_linux = !g:is_windows
 
-" ---------- Default Settings ---------------------------------------------------
-execute 'source ' . g:vi_dir . '/sources/run-settings-default.vim'
+let g:vi_dir = getcwd() . (g:is_windows ? '/vimfiles' : '/.vim')
+
+try
+    " ---------- Default Settings ---------------------------------------------------
+    execute 'source ' . g:vi_dir . '/sources/run-settings-default.vim'
+catch /.*/
+    " Used when occurs 'git commit' editions
+    finish    
+endtry
 
 " ---------- Plugins ------------------------------------------------------------
 
@@ -67,7 +65,7 @@ execute 'source ' . g:vi_dir . '/sources/ini-vim-markdown.vim'
 " ******** coc-intelephense settings ************************************
 execute 'source ' . g:vi_dir . '/sources/ini-coc-intelephense.vim'
 
-" ---------- Configurações customizadas do vi (built-in) -------------------------
+" ---------- Custom settings for vi -------------------------
 
 execute 'source ' . g:vi_dir . '/sources/run-my-remaps.vim'
 
@@ -75,7 +73,6 @@ execute 'source ' . g:vi_dir . '/sources/run-my-remaps.vim'
 execute 'source ' . g:vi_dir . '/sources/run-skeletons.vim'
 
 " -------------------------------------------------------------------------------
-
 
 
 

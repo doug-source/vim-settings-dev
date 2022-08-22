@@ -3,15 +3,15 @@ let s:interpreter = '/bin/bash'
 " skeletors folder
 let s:skels_dir = g:vi_dir . '/skel'
 
-" Carrega em todos os novos arquivos de extensão '.html', um template com 
-" a a HTML markup básica
+" Load, every new files with .html extension, a template with 
+" the basic HTML markup (version 5)
 autocmd BufNewFile *.html execute '0r ' . s:skels_dir . '/skel.html' 
-" Carrega em todos os novos arquivos de extensão '.sh', um template com a
-" shebang na primeira linha do script (no caso de Linux-type system)
+
+" Load, every new files with '.sh' extension, a template with
+" shebang in the first line of scrip (in case Linux-type system)
 if g:is_linux
     autocmd BufNewFile *.sh 0put = '#!' . s:interpreter . nr2char(10) . nr2char(10)
 endif
 
-" Carrega em todos os novos arquivos de extensão '.html', um template com 
-" a a HTML markup básica
-autocmd BufNewFile *.php execute '0r ' . s:skels_dir . '/skel.php' 
+" Load, every new files with '.php', a template with PHP's opening tags (only)
+autocmd BufNewFile *.php execute '0r ' . s:skels_dir . '/skel.php'

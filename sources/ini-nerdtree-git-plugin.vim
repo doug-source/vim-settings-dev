@@ -1,4 +1,6 @@
-
+"
+" Definition of custom icons used by NERDTreeGitStatus
+"
 let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ 'Modified'  :'✹',
         \ 'Staged'    :'✚',

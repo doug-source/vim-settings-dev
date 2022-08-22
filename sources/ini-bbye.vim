@@ -1,3 +1,4 @@
-" Fecha o buffer onde o cursor esteja ativo
+"
+" Delete the buffer where the cursor is active
+"
 nnoremap q :Bdelete<CR>
-

@@ -1,9 +1,9 @@
-" ******** Loading das custom functions ************************************
+" ******** custom functions loading ************************************
 execute 'source ' . g:vi_dir . '/sources/run-functions.vim'
 
 " ---------------------------------------------------------------------------
 " 
-" Define as 'coc extensions' instaladas (automaticamente no startup do vim)
+" Define 'coc extensions' installed (automatically in the vim startup)
 " 
 " ---------------------------------------------------------------------------
 let g:coc_global_extensions =<< trim EXT
@@ -20,7 +20,7 @@ EXT
 
 let g:coc_start_at_startup = 1
 
-" Keyboard shortcut para utilização de 'TAB key' para seleção de autocomplete
+" Keyboard shortcut to using of 'TAB key' to autocomplete selection
 inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() :
     \ coc#pum#visible() ? coc#_select_confirm() :
     \ coc#expandableOrJumpable() ?
@@ -28,10 +28,10 @@ inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() :
     \ CheckBackSpace() ? "\<TAB>" :
     \ coc#refresh()
 
-" Keyboard shortcut para utilização de 'Ctrl+space' para seleção de autocomplete
+" Keyboard shortcut to using of 'Ctrl+space' to autocomplete selection
 inoremap <silent><expr> <C-@> coc#pum#visible() ? coc#pum#confirm() : "\<C-@>"
 
-" Keyboard shortcut para utilização de 'Enter' para seleção de autocomplete
+" Keyboard shortcut to using of 'Enter' to autocomplete selection
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
 
 " ===================================================================================
