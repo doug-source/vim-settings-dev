@@ -39,24 +39,19 @@ endfunction
 " Execute the 'save session' in Vim closing
 "
 function! PersistSession()
-    if empty(glob(g:vi_dir . '/markers/.devRunning'))
-        return
-    endif
     autocmd VimLeave * call ExecCommand('NERDTreeTabsClose')
     execute 'autocmd VimLeave * mksession! ' . g:vi_dir . '/.session.vim'
-    " Remove o arquivo que sinaliza que o vim abriu em 'development cycle'
-    if g:is_linux
-        autocmd VimLeave * silent execute '!rm -f ' . g:vi_dir . '/markers/.devRunning'
-    endif
+    " Remove the file that signals that vim externally started the 'development cycle flag number 1'
+    autocmd VimLeave * call RemoveFile(g:vi_dir . '/markers/.devRunning')
+    " Remove the file that signals that vim internally started the 'development cycle flag number 2'
+    autocmd VimLeave * call RemoveFile(g:vi_dir . '/markers/.vimRunning')
 endfunction
 
 "
 " Execute the 'load session' in Vim opening
 "
 function! LoadSession()
-    if empty(glob(g:vi_dir . '/markers/.devRunning'))
-        return
-    endif
+    call CreateVimOpenMarker(g:vi_dir)
     let l:session_filepath = g:vi_dir . '/.session.vim'
     if empty(glob(l:session_filepath))
         autocmd VimEnter * call NERDTreeCustomOpening()
@@ -69,9 +64,7 @@ function! LoadSession()
     try
         silent execute 'source ' . l:session_filepath
     catch /.*/
-        let l:cmd = g:is_windows ? 'del' : 'rm'
-        silent execute '!' . l:cmd . ' ' . l:session_filepath
-        echo 'Error during the loading of vim''s session file!'
+        call RemoveFile(l:session_filepath, 'Error during the loading of vim''s session file!')
     endtry
     autocmd VimEnter * call NERDTreeCustomOpening()
 endfunction
@@ -123,4 +116,26 @@ function! DeleteBuffer()
   let bufn = matchstr(path, '\v\d+\ze\*No Name')
   exec "bd" bufn ==# "" ? path : bufn
   exec "norm \<F5>"
+endfunction
+
+"
+" Creates the flag file starting the 'development cycle flag number 1'
+"
+function! CreateVimOpenMarker(vim_dir) abort
+    let l:cmd = g:is_windows ? 'echo ' : 'echo -e '
+    silent execute '!' . l:cmd . '''\nProjects structure loaded\!\n'' > ' . a:vim_dir . '/markers/.vimRunning'
+endfunction
+
+"
+" Removes the present file(s) into a:filepath argument and optionally echo a message (second parameter)
+"
+function RemoveFile(filepath, ...) abort
+    let l:cmd = g:is_windows ? 'del' : 'rm'
+    if type(a:filepath) is v:t_list
+        let a:filepath = join(a:filepath, ' ')
+    endif
+    silent execute '!' . l:cmd . ' ' . a:filepath
+    if a:0 == 2
+        echo a:2
+    endif
 endfunction

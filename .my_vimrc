@@ -2,14 +2,37 @@
 let g:is_windows = &term == "win32" || "pcterm" || has("gui_win32") || has('win32')
 let g:is_linux = !g:is_windows
 
-let g:vi_dir = getcwd() . (g:is_windows ? '/vimfiles' : '/.vim')
+"
+" Ensures dirname (user's home directory) is really the correct.
+" Depending of the current working directory (cwd) from command line where vim is
+" started, the commands pwd() and expand('%:p:h') return the cwd and not the
+" user's home directory (that it is the directory most correct and required in
+" this context and for being where is the vim's setting file)
+"
+if g:is_windows
+    let s:dirname = trim(system('for %%F in ("' . $MYVIMRC . '") do set dirname=%%~dpF & echo %dirname%'))
+else
+    let s:dirname = trim(system('dirname ' . $MYVIMRC))
+endif
+
+let g:vi_dir = s:dirname . (g:is_windows ? '/vimfiles' : '/.vim')
+
+" Ensures the vim does not started if 'development cycle flag number 1' is already been right
+if empty(glob(g:vi_dir . '/markers/.devRunning'))
+    finish
+endif
+" Ensures the vim does not started if 'development cycle flag number 2' is already been right
+if !empty(glob(g:vi_dir . '/markers/.vimRunning'))
+    finish
+endif
 
 try
     " ---------- Default Settings ---------------------------------------------------
     execute 'source ' . g:vi_dir . '/sources/run-settings-default.vim'
 catch /.*/
-    " Used when occurs 'git commit' editions
-    finish    
+    " Used when anormal situations occur
+    echo '!!! 💣💣💣 ERROR 💣💣💣 !!!'
+    finish
 endtry
 
 " ---------- Plugins ------------------------------------------------------------

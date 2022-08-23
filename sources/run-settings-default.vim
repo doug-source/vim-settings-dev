@@ -54,12 +54,14 @@ set listchars=trail:.,eol:$
 " It serves for vim's built-in terminal open on the 'bottom' side
 set splitbelow
 
-"
-" Session saving routine from vim
-"
-call PersistSession()
+if !empty(glob(g:vi_dir . '/markers/.devRunning'))
+    "
+    " Session saving routine from vim
+    "
+    call PersistSession()
 
-"
-" Session loading routine from vim
-"
-call LoadSession()
+    "
+    " Session loading routine from vim
+    "
+    call LoadSession()
+endif

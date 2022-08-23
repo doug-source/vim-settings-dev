@@ -8,6 +8,7 @@
 *.swp
 /.session.vim
 /markers/.devRunning
+/markers/.vimRunning
 /markers/bookmarkActive
 
 # -------------------------------------------------------------------------
