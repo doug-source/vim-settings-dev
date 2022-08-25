@@ -1,102 +1,48 @@
-" -----------Variables-----------------------------------------------------------
-let g:is_windows = &term == "win32" || "pcterm" || has("gui_win32") || has('win32')
-let g:is_linux = !g:is_windows
 
-"
-" Ensures dirname (user's home directory) is really the correct.
-" Depending of the current working directory (cwd) from command line where vim is
-" started, the commands pwd() and expand('%:p:h') return the cwd and not the
-" user's home directory (that it is the directory most correct and required in
-" this context and for being where is the vim's setting file)
-"
-if g:is_windows
-    let s:dirname = trim(system('for %%F in ("' . $MYVIMRC . '") do set dirname=%%~dpF & echo %dirname%'))
-else
-    let s:dirname = trim(system('dirname ' . $MYVIMRC))
-endif
+execute 'runtime src/bootstrap/imports.vim'
 
-let g:vi_dir = s:dirname . (g:is_windows ? '/vimfiles' : '/.vim')
-
-" Ensures the vim does not started if 'development cycle flag number 1' is already been right
-if empty(glob(g:vi_dir . '/markers/.devRunning'))
-    finish
-endif
-" Ensures the vim does not started if 'development cycle flag number 2' is already been right
-if !empty(glob(g:vi_dir . '/markers/.vimRunning'))
+if !g:App.is_started_by_terminal() || g:App.items.ConfigJson.is_running()
     finish
 endif
 
-try
-    " ---------- Default Settings ---------------------------------------------------
-    execute 'source ' . g:vi_dir . '/sources/run-settings-default.vim'
-catch /.*/
-    " Used when anormal situations occur
-    echo '!!! 💣💣💣 ERROR 💣💣💣 !!!'
-    finish
-endtry
+call g:App.items.SettingsDefaultRunner.dispatch_session()
 
-" ---------- Plugins ------------------------------------------------------------
+call g:App.items.VimPlugManager.load_plugins()
 
-" ******** Vim-Plug settings *****************************************
-execute 'source ' . g:vi_dir . '/sources/ini-vim-plug.vim'
+call g:App.items.NERDTreeCfg.define()
 
-" ******** Vim-Plug's plugins settings *******************************
-execute 'source ' . g:vi_dir . '/sources/run-load-plugins.vim'
+call g:App.items.EmmetVimCfg.define()
 
-" ******** NERDTree settings *****************************************
-execute 'source ' . g:vi_dir . '/sources/ini-NERDTree.vim'
+call g:App.items.TagbarCfg.define()
 
-" ******** Vim-Emmet settings ****************************************
-execute 'source ' . g:vi_dir . '/sources/ini-emmet.vim'
+call g:App.items.VimAirlineCfg.define()
 
-" ******** TagBarToogle settings *************************************
-execute 'source ' . g:vi_dir . '/sources/ini-tag-bar-toogle.vim'
+call g:App.items.VimAirlineThemesCfg.define()
 
-" ******** Vim-air-line settings *************************************
-execute 'source ' . g:vi_dir . '/sources/ini-vim-airline.vim'
+call g:App.items.NerdFontsRunner.install()
 
-" ******** Vim-air-line-theme settings *************************************
-execute 'source ' . g:vi_dir . '/sources/ini-vim-airline-themes.vim'
+call g:App.items.CocNvimCfg.define()
 
-" ******** nerd-fonts settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-nerd-fonts.vim'
+call g:App.items.CtrlpCfg.define()
 
-" ******** coc.nvim settings *****************************************
-execute 'source ' . g:vi_dir . '/sources/ini-coc-nvim.vim'
+call g:App.items.AleCfg.define()
 
-" ******** ctrlP settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-ctrlp.vim'
+call g:App.items.VimDeviconsCfg.define()
 
-" ******** ale settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-ale.vim'
+call g:App.items.NerdtreeGitPluginCfg.define()
 
-" ******** dev-icons settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-devicons.vim'
+call g:App.items.VimNerdtreeSyntaxHighlightCfg.define()
 
-" ******** nerdtree-git-plugin settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-nerdtree-git-plugin.vim'
+call g:App.items.VimBbyeCfg.define()
 
-" ******** nerdtree-syntax-highlight settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-vim-nerdtree-syntax-highlight.vim'
+call g:App.items.VimMarkdownCfg.define()
 
-" ******** bbye settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-bbye.vim'
+call g:App.items.CocIntelephenseCfg.define()
 
-" ******** vim-markdown settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-vim-markdown.vim'
+call g:App.items.FixjsonCfg.define()
 
-" ******** coc-intelephense settings ************************************
-execute 'source ' . g:vi_dir . '/sources/ini-coc-intelephense.vim'
+call g:App.items.AlePhpCfg.define()
 
-" ---------- Custom settings for vi -------------------------
+call g:App.items.SettingsDefaultRunner.load_custom_remaps()
 
-execute 'source ' . g:vi_dir . '/sources/run-my-remaps.vim'
-
-" ****** Skeleton loads ******
-execute 'source ' . g:vi_dir . '/sources/run-skeletons.vim'
-
-" -------------------------------------------------------------------------------
-
-
-
-
+call g:App.items.SettingsDefaultRunner.run_skeletons()

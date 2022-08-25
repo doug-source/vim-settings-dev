@@ -6,10 +6,12 @@
 /plugged
 /scripts
 *.swp
+/.php-cs-fixer.cache
 /.session.vim
+/markers/.config.json*
 /markers/.devRunning
-/markers/.vimRunning
-/markers/bookmarkActive
+/markers/.swaps.json
+/plugin
 
 # -------------------------------------------------------------------------
 # These are some examples of commonly ignored file patterns.
