@@ -56,7 +56,7 @@ endfu
 " @todo Transfer data to ConfigJson (folder's name)
 "
 fun g:PluginManager.install(folder_name, install_command, package_name)
-    let l:pathname = g:App.vi_dir . '/plugin/' . a:folder_name
+    let l:pathname = g:App.vi_dir . g:App.items.ConfigJson.data.paths.executables . '/' . a:folder_name
     return self.cmd.command_into_new_folder(l:pathname, a:install_command . ' ' . a:package_name)
 endfu
 
@@ -92,24 +92,29 @@ fun g:PluginManager.swap_variables(variables, plugin_cfg)
     let l:variables = copy(a:variables)
     let l:swap_base = self.App.items.ConfigJson.swap_base
     let l:swap_defaults = get(a:plugin_cfg, 'swap-defaults', {})
+    let l:paths = self.App.items.ConfigJson.data.paths
     if !has_key(a:plugin_cfg, 'swap-variables')
         return l:variables
     endif
-    for variable_name in keys(a:plugin_cfg['swap-variables'])
-        let l:swap_items = a:plugin_cfg['swap-variables'][variable_name]
-        for swap_key in l:swap_items
-            let l:swap_val = get(l:swap_base, swap_key, '')
-            if empty(l:swap_val)
-                let l:default_var = get(l:swap_defaults, variable_name, 0)
-                if empty(l:default_var)
-                    continue
-                endif
-                let l:swap_val = get(l:default_var, swap_key, 0)
+    for [variable_name, swap_items] in items(a:plugin_cfg['swap-variables'])
+        for swap_key in swap_items
+            if swap_key =~? '\v\{paths:.+\}'
+                let l:replacer = l:paths[swap_key[7:-2]]
+                let l:variables[variable_name] = substitute(l:variables[variable_name], '\v\{paths:' . swap_key[7:-2] . '\}', l:replacer, 'g')
+            else
+                let l:swap_val = get(l:swap_base, swap_key, '')
                 if empty(l:swap_val)
-                    continue
+                    let l:default_var = get(l:swap_defaults, variable_name, 0)
+                    if empty(l:default_var)
+                        continue
+                    endif
+                    let l:swap_val = get(l:default_var, swap_key, 0)
+                    if empty(l:swap_val)
+                        continue
+                    endif
                 endif
+                let l:variables[variable_name] = substitute(l:variables[variable_name], '\v\{' . swap_key[1:-2] . '\}', l:swap_val, 'g')
             endif
-            let l:variables[variable_name] = substitute(l:variables[variable_name], '\v\{' . swap_key[1:-2] . '\}', l:swap_val, 'g')
         endfor
     endfor
     return l:variables

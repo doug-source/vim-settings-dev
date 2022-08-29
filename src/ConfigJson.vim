@@ -60,7 +60,8 @@ endfu
 " Executes the json formating from the 'configuration json file' using the 'vim-fix-json'
 "
 fun g:ConfigJson.format_config_json()
-    let l:fixjsonPath = self.App.vi_dir . '/plugin/fixjson/node_modules/.bin/fixjson'
+    let l:paths = g:App.items.ConfigJson.data.paths
+    let l:fixjsonPath = g:App.vi_dir . l:paths.executables . l:paths.fixjson
     if filereadable(l:fixjsonPath)
         let l:devNULL = self.App.is_windows() ? ' > NULL' : ' >/dev/null'
         silent execute '!' . l:fixjsonPath . ' --write -i 4 ' . self.path . l:devNULL

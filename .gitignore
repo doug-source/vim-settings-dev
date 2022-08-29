@@ -11,7 +11,7 @@
 /markers/.config.json*
 /markers/.devRunning
 /markers/.swaps.json
-/plugin
+/executables/*
 
 # -------------------------------------------------------------------------
 # These are some examples of commonly ignored file patterns.
