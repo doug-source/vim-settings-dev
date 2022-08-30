@@ -64,12 +64,21 @@ endfu
 "
 fun g:SessionManager.persist_session()
     let l:data = self.App.items.ConfigJson.data
-    autocmd VimLeave * call g:App.exec_command('NERDTreeTabsClose')
+    autocmd VimLeave * call g:App.items.SessionManager.close_explorer()
     execute 'autocmd VimLeave * mksession! ' . self.App.vi_dir . l:data.paths.session
     " Remove the file that signals that vim externally started the 'development cycle flag number 1'
     execute 'autocmd VimLeave * call g:App.items.Cmd.remove_file(''' . self.App.vi_dir . '/markers/.devRunning'')'
     " Remove the signal that vim internally started the 'development cycle flag number 2'
     execute 'autocmd VimLeave * call g:App.items.ConfigJson.update_config(''running'')'
+endfu
+
+"
+" Close the NERDTree's explorer if it is open
+"
+fun g:SessionManager.close_explorer()
+    if exists('g:NERDTree') && g:NERDTree.IsOpen()
+        call self.App.exec_command('NERDTreeClose')
+    endif
 endfu
 
 "
@@ -82,7 +91,7 @@ fun g:SessionManager.NERDTree_custom_opening(bookmark)
     if a:bookmark is v:null || !g:NERDTreeBookmark.BookmarkExistsFor(a:bookmark)
         NERDTree
     else
-        execute 'NERDTree | OpenBookmark ' . a:bookmark 
+        execute 'NERDTree | OpenBookmark ' . a:bookmark
     endif
     wincmd p
 endfu

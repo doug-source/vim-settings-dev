@@ -124,6 +124,14 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
     nnoremap <C-z> <Nop>
     inoremap <C-z> <Nop>
     vnoremap <C-z> <Nop>
+
+    "
+    " Removes the default close window keymap and inserts a new keymap using Ctrl+c shortcut
+    "
+    nnoremap <C-w>q <Nop>
+    inoremap <C-w>q <Nop>
+    vnoremap <C-w>q <Nop>
+    nnoremap <silent> <C-c> :clo<CR>
 endfu
 
 "
