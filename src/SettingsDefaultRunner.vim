@@ -112,9 +112,10 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
 
     "
     " Save the file edited in the vim
-    " (Ctrl+Shift+s)
+    " (Ctrl+s)
     "
-    nnoremap <silent> <c-S> :w<cr>
+    nnoremap <silent> <c-s> :w<CR>
+    inoremap <silent> <c-s> <Esc>:w<CR>==gi
 
     "
     " Removes the Ctrl-z
