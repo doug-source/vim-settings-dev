@@ -53,7 +53,7 @@ fun g:SettingsDefaultRunner.dispatch_session()
 endfu
 
 "
-" Defines all custom native keymaps 
+" Defines all custom native keymaps
 " @keymaps
 "
 fun g:SettingsDefaultRunner.load_custom_remaps()
@@ -115,6 +115,14 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
     " (Ctrl+Shift+s)
     "
     nnoremap <silent> <c-S> :w<cr>
+
+    "
+    " Removes the Ctrl-z
+    " Ctrl-z executes the vim's abort that exit with the markers' remotion required
+    "
+    nnoremap <C-z> <Nop>
+    inoremap <C-z> <Nop>
+    vnoremap <C-z> <Nop>
 endfu
 
 "
@@ -128,9 +136,9 @@ fun g:SettingsDefaultRunner.run_skeletons()
     " skeletors folder
     let s:skels_dir = self.App.vi_dir . '/skel'
 
-    " Load, every new files with .html extension, a template with 
+    " Load, every new files with .html extension, a template with
     " the basic HTML markup (version 5)
-    autocmd BufNewFile *.html execute '0r ' . s:skels_dir . '/skel.html' 
+    autocmd BufNewFile *.html execute '0r ' . s:skels_dir . '/skel.html'
 
     " Load, every new files with '.sh' extension, a template with
     " shebang in the first line of scrip (in case Linux-type system)
