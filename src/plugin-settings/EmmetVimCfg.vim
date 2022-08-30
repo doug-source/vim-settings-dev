@@ -34,7 +34,9 @@ fun g:EmmetVimCfg.define()
     "
     " Define Emmet to execute only specific extensions
     "
-    autocmd FileType html,css,php inoremap <buffer> <silent> <C-K> <Esc>:call emmet#expandAbbr(0,"")<CR>==gi
+    execute 'autocmd FileType '
+\       . get(l:plugin_cfg, 'file-types', 'html,css')
+\       . ' inoremap <buffer> <silent> <C-K> <Esc>:call emmet#expandAbbr(0,"")<CR>==gi'
 endfunction
 
 call g:App.register('EmmetVimCfg', g:EmmetVimCfg.new())
