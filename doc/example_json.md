@@ -22,7 +22,7 @@ This json serves as basis to data store into vim. Its pathname and filename must
                     "number",
                     "autoindent",
                     "showcmd",
-                    "expandab",
+                    "expandtab",
                     "tabstop=4",
                     "softtabstop=4",
                     "shiftwidth=4",
@@ -59,7 +59,9 @@ This json serves as basis to data store into vim. Its pathname and filename must
                         "coc-tsserver",
                         "@yaegassy/coc-intelephense"
                     ],
-                    "g:coc_start_at_startup": 1
+                    "g:coc_start_at_startup": 1,
+                    "g:coc_snippet_next": "'<S-Right>'",
+                    "g:coc_snippet_prev": "'<S-Left>'"
                 }
             },
             "vim-markdown": {
@@ -209,7 +211,6 @@ This json serves as basis to data store into vim. Its pathname and filename must
                 "tiagofumo/vim-nerdtree-syntax-highlight"
             ],
             "mattn/emmet-vim",
-            "tpope/vim-commentary",
             "majutsushi/tagbar",
             "dense-analysis/ale",
             "vim-airline/vim-airline",
@@ -225,6 +226,7 @@ This json serves as basis to data store into vim. Its pathname and filename must
             "tpope/vim-surround",
             "gwww/vim-bbye",
             "rhysd/vim-healthcheck",
+            "tomtom/tcomment_vim",
             "preservim/vim-markdown"
         ]
     },
