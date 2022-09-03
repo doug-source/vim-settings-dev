@@ -39,8 +39,8 @@ endfu
 " Loads the unique variables (without Cfg class to manage)
 "
 fun g:SettingsDefaultRunner.load_milestone_variables()
-    let l:variables = get(self.App.items.ConfigJson.data.env.setting, 'milestone-variables', 0)
-    if l:variables == 0
+    let l:variables = get(self.App.items.ConfigJson.data.env.settings, 'milestone-variables', 0)
+    if l:variables is v:t_number
         return
     endif
     for [l:key, l:value] in items(l:variables)
