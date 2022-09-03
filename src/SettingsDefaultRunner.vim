@@ -31,6 +31,21 @@ fun g:SettingsDefaultRunner.init(App)
 
     execute 'colorscheme ' . l:options.colorscheme
     execute 'highlight Comment cterm=' . l:options.highlight.Comment.cterm
+
+    call self.load_milestone_variables()
+endfu
+
+"
+" Loads the unique variables (without Cfg class to manage)
+"
+fun g:SettingsDefaultRunner.load_milestone_variables()
+    let l:variables = get(self.App.items.ConfigJson.data.env.setting, 'milestone-variables', 0)
+    if l:variables == 0
+        return
+    endif
+    for [l:key, l:value] in items(l:variables)
+        execute 'let ' . l:key . ' = ' . l:value
+    endfor
 endfu
 
 "
