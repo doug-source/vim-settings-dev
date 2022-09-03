@@ -29,6 +29,9 @@ This json serves as basis to data store into vim. Its pathname and filename must
                     "clipboard=unnamedplus"
                 ]
             },
+            "milestone-variables": {
+                "g:vim_php_refactoring_use_default_mapping": 0
+            },
             "json": {
                 "fixers": [
                     "fixjson"
@@ -227,7 +230,8 @@ This json serves as basis to data store into vim. Its pathname and filename must
             "gwww/vim-bbye",
             "rhysd/vim-healthcheck",
             "tomtom/tcomment_vim",
-            "preservim/vim-markdown"
+            "preservim/vim-markdown",
+            "adoy/vim-php-refactoring-toolbox"
         ]
     },
     "paths": {
