@@ -10,6 +10,7 @@ fun g:App.new()
     let l:instance = copy(self)
     let l:instance.items = {}
     let l:instance.vi_dir = g:App.get_vi_dir()
+    let l:instance.menu_register = {}
 
     let g:App = l:instance
 endfu
@@ -55,7 +56,7 @@ fun g:App.get_home()
 endfu
 
 "
-" Execute the command if it exists 
+" Execute the command if it exists
 "
 fun g:App.exec_command(comm_name, ...)
     let l:command = ':' . a:comm_name
@@ -87,6 +88,13 @@ fun g:App.register(global_variable_name, instance)
         call a:instance.init(self)
     endif
     execute 'unlet g:' . a:global_variable_name
+endfu
+
+"
+" Registers an action to be called to build an especific menu
+"
+fun g:App.register_menu_subject(key, data)
+    let self.menu_register[a:key] = a:data
 endfu
 
 call g:App.new()

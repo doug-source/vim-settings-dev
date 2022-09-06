@@ -12,6 +12,7 @@
 /markers/.devRunning
 /markers/.swaps.json
 /executables/*
+.php-cs-fixer.cache
 
 # -------------------------------------------------------------------------
 # These are some examples of commonly ignored file patterns.

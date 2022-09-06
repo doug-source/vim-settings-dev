@@ -9,6 +9,7 @@ let g:SettingsDefaultRunner = {}
 fun g:SettingsDefaultRunner.new()
     if !has_key(g:App.items, 'SettingsDefaultRunner')
         let l:instance = copy(self)
+        let l:instance.key = 'SettingsDefaultRunner'
         return l:instance
     endif
     return get(g:App.items, 'SettingsDefaultRunner', v:null)
@@ -32,15 +33,15 @@ fun g:SettingsDefaultRunner.init(App)
     execute 'colorscheme ' . l:options.colorscheme
     execute 'highlight Comment cterm=' . l:options.highlight.Comment.cterm
 
-    call self.load_milestone_variables()
+    call self.load_standalone_variables()
 endfu
 
 "
-" Loads the unique variables (without Cfg class to manage)
+" Loads the standalone variables (without Cfg class to manage)
 "
-fun g:SettingsDefaultRunner.load_milestone_variables()
-    let l:variables = get(self.App.items.ConfigJson.data.env.settings, 'milestone-variables', 0)
-    if l:variables is v:t_number
+fun g:SettingsDefaultRunner.load_standalone_variables()
+    let l:variables = get(self.App.items.ConfigJson.data.env.settings, 'standalone-variables', 0)
+    if type(l:variables) is v:t_number
         return
     endif
     for [l:key, l:value] in items(l:variables)
@@ -147,6 +148,8 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
     inoremap <C-w>q <Nop>
     vnoremap <C-w>q <Nop>
     nnoremap <silent> <C-c> :clo<CR>
+
+    nnoremap <silent> <F7> :call g:App.items.SettingsDefaultRunner.load_menus()<CR>
 endfu
 
 "
@@ -174,4 +177,45 @@ fun g:SettingsDefaultRunner.run_skeletons()
     autocmd BufNewFile *.php execute '0r ' . s:skels_dir . '/skel.php'
 endfu
 
-call g:App.register('SettingsDefaultRunner', g:SettingsDefaultRunner.new())
+"
+" Runs the quickmenu plugin's loading.
+" The quickmenu plugin (source is inside of vim's autoload directory) only runs and exists
+" when its methods are called somewhere. To custom menus can exist it's necessary it be loaded in advance.
+"
+fun g:SettingsDefaultRunner.load_quickmenu_plugin()
+    let l:PluginManager = self.App.items.PluginManager
+    let l:quickmenu_path = l:PluginManager.replace_vim_dir_match(self.App.items.ConfigJson.data.paths.quickmenu)
+
+    let l:paths = g:App.items.ConfigJson.data.paths
+    let l:keys = l:PluginManager.detach_keys(l:quickmenu_path)
+    for l:key in l:keys
+        let l:quickmenu_path = l:PluginManager.replace_key(l:quickmenu_path, l:key, get(l:paths, l:key[7:-2]))
+    endfor
+    if !empty(glob(l:quickmenu_path))
+        execute 'source ' . l:quickmenu_path
+    endif
+endfu
+
+"
+" Loads all custom menus registered. Used every time menus display is triggered.
+"
+fun g:SettingsDefaultRunner.load_menus()
+    if !has_key(g:, 'quickmenu_options')
+        return
+    endif
+    let l:menu_counter = 0
+    call g:quickmenu#reset()
+    for [ l:key, l:data ] in items(self.App.menu_register)
+        if l:data.check()
+            call l:data.action()
+            let l:menu_counter += 1
+        endif
+    endfor
+    if l:menu_counter > 0
+        call quickmenu#toggle(0)
+    endif
+endfu
+
+let s:instance = g:SettingsDefaultRunner.new()
+
+call g:App.register(s:instance.key, s:instance)

@@ -99,25 +99,47 @@ fun g:PluginManager.swap_variables(variables, plugin_cfg)
     for [variable_name, swap_items] in items(a:plugin_cfg['swap-variables'])
         for swap_key in swap_items
             if swap_key =~? '\v\{paths:.+\}'
-                let l:replacer = l:paths[swap_key[7:-2]]
-                let l:variables[variable_name] = substitute(l:variables[variable_name], '\v\{paths:' . swap_key[7:-2] . '\}', l:replacer, 'g')
+                let l:swap_val = get(l:paths, swap_key[7:-2], '')
             else
-                let l:swap_val = get(l:swap_base, swap_key, '')
+                let l:swap_val = self.build_swap_value(l:swap_base, swap_key, l:swap_defaults, variable_name)
                 if empty(l:swap_val)
-                    let l:default_var = get(l:swap_defaults, variable_name, 0)
-                    if empty(l:default_var)
-                        continue
-                    endif
-                    let l:swap_val = get(l:default_var, swap_key, 0)
-                    if empty(l:swap_val)
-                        continue
-                    endif
+                    continue
                 endif
-                let l:variables[variable_name] = substitute(l:variables[variable_name], '\v\{' . swap_key[1:-2] . '\}', l:swap_val, 'g')
             endif
+            let l:variables[variable_name] = self.replace_key(l:variables[variable_name], swap_key, l:swap_val)
         endfor
     endfor
     return l:variables
+endfu
+
+"
+" Defines the possible swap values
+"
+fun g:PluginManager.build_swap_value(swap_base, swap_key, swap_defaults, variable_name)
+    let l:swap_val = get(a:swap_base, a:swap_key, '')
+    if empty(l:swap_val)
+        let l:default_var = get(a:swap_defaults, a:variable_name, '')
+        if !empty(l:default_var)
+            let l:swap_val = get(l:default_var, a:swap_key, '')
+        endif
+    endif
+    return l:swap_val
+endfu
+
+"
+" Replaces strings that have the '{.*}' pattern
+"
+fun g:PluginManager.replace_key(string, key, replacer = '')
+    return substitute(a:string, '\v\{' . a:key[1:-2] . '\}', a:replacer, 'g')
+endfu
+
+"
+" Returns all '{.*}' patterns present into string parameter
+"
+fun g:PluginManager.detach_keys(string)
+    let l:lst = []
+    call substitute(a:string, '\v\{[^\}]*\}', '\=add(l:lst, submatch(0))', 'g')
+    return l:lst
 endfu
 
 "
