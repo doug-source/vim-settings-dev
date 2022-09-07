@@ -29,9 +29,6 @@ This json serves as basis to data store into vim. Its pathname and filename must
                     "clipboard=unnamedplus"
                 ]
             },
-            "milestone-variables": {
-                "g:vim_php_refactoring_use_default_mapping": 0
-            },
             "json": {
                 "fixers": [
                     "fixjson"
@@ -41,7 +38,8 @@ This json serves as basis to data store into vim. Its pathname and filename must
                 "fixers": [
                     "php_cs_fixer"
                 ]
-            }
+            },
+            "standalone-variables": {}
         },
         "plugins": {
             "coc-nvim": {
@@ -84,6 +82,16 @@ This json serves as basis to data store into vim. Its pathname and filename must
                     "g:ctrlp_match_window_reversed": 0,
                     "g:ctrlp_show_hidden": 1,
                     "g:ctrlp_working_path_mode": 0
+                }
+            },
+            "phpactor": {
+                "variables": {
+                    "g:phpactor_executable": "'{vi_dir}{paths:vim-plug}/phpactor/bin/phpactor'"
+                },
+                "swap-variables": {
+                    "g:phpactor_executable": [
+                        "{paths:vim-plug}"
+                    ]
                 }
             },
             "vim-airline": {
@@ -231,7 +239,15 @@ This json serves as basis to data store into vim. Its pathname and filename must
             "rhysd/vim-healthcheck",
             "tomtom/tcomment_vim",
             "preservim/vim-markdown",
-            "adoy/vim-php-refactoring-toolbox"
+            "skywind3000/quickmenu.vim",
+            {
+                "cfg": {
+                    "tag": "*",
+                    "for": "php",
+                    "do": "composer install --no-dev -o"
+                },
+                "pack": "phpactor/phpactor"
+            }
         ]
     },
     "paths": {
@@ -240,7 +256,9 @@ This json serves as basis to data store into vim. Its pathname and filename must
         "executables": "/executables",
         "session": "/.session.vim",
         "vim-plug": "/plugged",
-        "swap": "/markers/.swaps.json"
+        "swap": "/markers/.swaps.json",
+        "quickmenu": "{vi_dir}{paths:vim-plug}/quickmenu.vim/autoload/quickmenu.vim"
     },
+    "running": 1,
     "bookmark": "learning"
 }</pre>
