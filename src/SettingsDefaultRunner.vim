@@ -108,7 +108,7 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
     nnoremap <silent> <C-d> /<C-r><C-w><cr><S-n>cgn
 
     " Open a new tab visualizing the 'file explorer' in user's home directory
-    nnoremap <S-t> :Tex ~<cr>
+    nnoremap <silent><Leader>t :Tex<cr>
 
     " Keyboard-shortcut to auto-load operation from .vimrc and from NERDTree
     nnoremap <C-s> :source $MYVIMRC<cr>
@@ -149,7 +149,9 @@ fun g:SettingsDefaultRunner.load_custom_remaps()
     vnoremap <C-w>q <Nop>
     nnoremap <silent> <C-c> :clo<CR>
 
+    " keymap to open the quickmenu (if possible)
     nnoremap <silent> <F7> :call g:App.items.SettingsDefaultRunner.load_menus()<CR>
+    vnoremap <silent> <F7> :call g:App.items.SettingsDefaultRunner.load_menus()<CR>
 endfu
 
 "
