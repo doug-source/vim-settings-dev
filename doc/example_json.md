@@ -259,6 +259,5 @@ This json serves as basis to data store into vim. Its pathname and filename must
         "swap": "/markers/.swaps.json",
         "quickmenu": "{vi_dir}{paths:vim-plug}/quickmenu.vim/autoload/quickmenu.vim"
     },
-    "running": 1,
     "bookmark": "learning"
 }</pre>

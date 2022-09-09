@@ -60,6 +60,7 @@ fun g:PhpactorCfg.build_menu()
     call g:quickmenu#append('Extract expression', ':call phpactor#ExtractExpression()')
     call g:quickmenu#append('Extract method', ':call phpactor#ExtractMethod()')
     call g:quickmenu#append('Copy file', ':call phpactor#CopyFile()')
+    call g:quickmenu#append('Context Menu', ':PhpactorContextMenu')
 endfu
 
 let s:instance = g:PhpactorCfg.new()
