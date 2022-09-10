@@ -24,16 +24,22 @@ endfu
 "
 fun g:SettingsDefaultRunner.init(App)
     let self.App = a:App
-    let l:options = a:App.items.ConfigJson.data.env.settings.options
 
-    for val in l:options.set
-        execute 'set ' . val
+    call self.load_standalone_variables()
+endfu
+
+"
+" Loads the native settings configurations
+"
+fun g:SettingsDefaultRunner.run_native_settings()
+    let l:options = self.App.items.ConfigJson.data.env.settings.options
+
+    for l:val in l:options.set
+        execute 'set ' . l:val
     endfor
 
     execute 'colorscheme ' . l:options.colorscheme
     execute 'highlight Comment cterm=' . l:options.highlight.Comment.cterm
-
-    call self.load_standalone_variables()
 endfu
 
 "

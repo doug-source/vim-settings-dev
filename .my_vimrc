@@ -46,3 +46,7 @@ call g:App.items.AlePhpCfg.define()
 call g:App.items.SettingsDefaultRunner.load_custom_remaps()
 
 call g:App.items.SettingsDefaultRunner.run_skeletons()
+
+call g:App.items.SettingsDefaultRunner.load_quickmenu_plugin()
+
+call g:App.items.SettingsDefaultRunner.run_native_settings()
